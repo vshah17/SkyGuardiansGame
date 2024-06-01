@@ -4,7 +4,6 @@ class TitleScene extends Phaser.Scene {
     }
 
     preload() {
-        // Load any assets needed for the title screen here
     }
 
     create() {
@@ -29,12 +28,10 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        // Add a white border around the game area
         this.add.graphics()
             .lineStyle(5, 0xffffff, 1)
             .strokeRect(0, 0, this.game.config.width, this.game.config.height);
 
-        // Use the correct frame names for player ship, bullets, and enemy ships
         this.player = this.physics.add.sprite(400, 500, 'spaceParts', 'playerShip2_orange.png');
         this.player.setCollideWorldBounds(true);
 
@@ -43,22 +40,22 @@ class GameScene extends Phaser.Scene {
         this.bullets = this.physics.add.group({
             defaultKey: 'spaceParts',
             frame: 'laserBlue01.png',
-            maxSize: 30,  // Create a pool of 30 bullets
+            maxSize: 30,  
             runChildUpdate: true
         });
 
         this.enemies = this.physics.add.group();
 
         this.time.addEvent({
-            delay: 2000, // Adjusted to reduce the spawn rate
+            delay: 2000, 
             callback: this.spawnEnemy,
             callbackScope: this,
             loop: true
         });
 
-        // Add collision detection between bullets and enemies
+
         this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy, null, this);
-        // Add collision detection between player and enemies
+
         this.physics.add.collider(this.player, this.enemies, this.playerHit, null, this);
 
         this.score = 0;
@@ -109,9 +106,9 @@ class GameScene extends Phaser.Scene {
     spawnEnemy() {
         const x = Phaser.Math.Between(50, 750);
         const enemy = this.enemies.create(x, 50, 'alienParts', 'shipBlue_manned.png');
-        enemy.body.velocity.y = 50; // Reduced speed
+        enemy.body.velocity.y = 50; 
 
-        // Destroy enemy if it goes out of bounds and reduce player lives
+
         enemy.checkWorldBounds = true;
         enemy.outOfBoundsKill = true;
         enemy.body.world.on('worldbounds', (body) => {
